@@ -12,17 +12,18 @@ quarter=lambda val: val.split("-")[1]
 year=lambda val: int(val.split("-")[0])
 st.title('Drug Marketing and Physician Targeting')
 base_dir=os.path.abspath(os.path.curdir)
+st.markdown("""**Business Problem:** Axtria Company had launched a drug; however, some physicians are yet to 
+prescribe it for the first time. A key client stakeholder has reached out to a Decision 
+Sciences Principal in Axtria for help to identify potential physicians who are most likely 
+to start prescribing the drug in the next quarter in order to channelize the marketing 
+efforts more effectively while targeting potential physicians.""")
+# @st.cache
+# def load_pickle():
+#     # print(param)
 
-@st.cache
-def load_pickle():
-    # print(param)
-    all_feature=pickle.load(open(base_dir+"/data/all_features.sav", 'rb'))
-    scaler=pickle.load(open(base_dir+"/data/scaler_dump.sav", 'rb'))
-    one_dump=pickle.load(open(base_dir+"/data/ohe_dump.sav", 'rb'))
-    model=pickle.load(open(base_dir+"/data/lgb_model.sav", 'rb'))
-    return all_feature,one_dump,scaler,model
+    # return all_feature,one_dump,scaler,model
 
-
+st.markdown("**Note:** Submit the below form data to predict pysician who will likely to prescribe the drug in next quarter")
 
 year_quarter=st.selectbox("Select Quarter",
                              options=["2019-Q3", "2019-Q4", "2020-Q1","2020-Q2", "2020-Q3"])
@@ -50,9 +51,12 @@ physician_speciality=st.selectbox("Select Speciality",
 submit = st.button("Submit")
 
 if submit:
-    st.write("loading pickle")
-    all_feature, one_dump, scaler, model = load_pickle()
-    st.write("Done")
+    # all_feature, one_dump, scaler, model = load_pickle()
+    all_feature = pickle.load(open(base_dir + "/data/all_features.sav", 'rb'))
+    scaler = pickle.load(open(base_dir + "/data/scaler_dump.sav", 'rb'))
+    one_dump = pickle.load(open(base_dir + "/data/ohe_dump.sav", 'rb'))
+    model = pickle.load(open(base_dir + "/data/lgb_model.sav", 'rb'))
+
     data = [{'year_quarter': year_quarter, 'brand_prescribed': binary(brand_prescribed), 'total_representative_visits':total_representative_visits,
              'total_sample_dropped': total_sample_dropped,"saving_cards_dropped": np.random.randint(0,140),"vouchers_dropped":np.random.randint(0,116),
              'total_seminar_as_attendee': np.random.randint(0,5),"total_seminar_as_speaker": np.random.randint(0,42),
