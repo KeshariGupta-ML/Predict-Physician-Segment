@@ -17,13 +17,10 @@ prescribe it for the first time. A key client stakeholder has reached out to a D
 Sciences Principal in Axtria for help to identify potential physicians who are most likely 
 to start prescribing the drug in the next quarter in order to channelize the marketing 
 efforts more effectively while targeting potential physicians.""")
-@st.cache()
-def load_pickle():
-    all_feature = joblib.load(base_dir + "/data/all_features.sav")
-    scaler = joblib.load(base_dir + "/data/scaler_dump.sav")
-    one_dump = joblib.load(base_dir + "/data/ohe_dump.sav")
-    model = joblib.load(base_dir + "/data/lgb_model.sav")
-    return all_feature,one_dump,scaler,model
+# @st.cache()
+# def load_pickle():
+#
+#     return all_feature,one_dump,scaler,model
 
 st.markdown("**Note:** Submit the below form data to predict pysician who will likely to prescribe the drug in next quarter")
 
@@ -53,8 +50,11 @@ physician_speciality=st.selectbox("Select Speciality",
 submit = st.button("Submit")
 
 if submit:
-    all_feature, one_dump, scaler, model = load_pickle()
-
+    # all_feature, one_dump, scaler, model = load_pickle()
+    all_feature = joblib.load("data/all_features.pkl")
+    scaler = joblib.load('data/scaler_dump.pkl')
+    one_dump = joblib.load(base_dir + "/data/ohe_dump.pkl")
+    model = joblib.load(base_dir + "/data/LGR_model.pkl")
 
     data = [{'year_quarter': year_quarter, 'brand_prescribed': binary(brand_prescribed), 'total_representative_visits':total_representative_visits,
              'total_sample_dropped': total_sample_dropped,"saving_cards_dropped": np.random.randint(0,140),"vouchers_dropped":np.random.randint(0,116),
