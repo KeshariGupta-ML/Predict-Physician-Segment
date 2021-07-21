@@ -58,7 +58,6 @@ if submit:
 
 
 
-    model = joblib.load(base_dir + '/data/LGR_model.pkl')
 
     data = [{'year_quarter': year_quarter, 'brand_prescribed': binary(brand_prescribed), 'total_representative_visits':total_representative_visits,
              'total_sample_dropped': total_sample_dropped,"saving_cards_dropped": np.random.randint(0,140),"vouchers_dropped":np.random.randint(0,116),
@@ -126,6 +125,7 @@ if submit:
     filename = open(filename, 'rb')
     all_feature = pickle.load(filename)
     xq_data=pd.DataFrame(xq_data,columns=all_feature)
+    model = joblib.load(base_dir + '/data/LGR_model.pkl')
 
     #y_pred = rf_model.predict(xq_point_new)
     y_pred = model.predict(xq_data)
