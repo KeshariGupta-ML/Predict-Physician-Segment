@@ -1,7 +1,9 @@
 # https://www.tutorialspoint.com/flask
+import joblib
 import numpy as np
 #from sklearn.externals import joblib
-import joblib,os
+import os
+import pickle
 import pandas as pd
 import streamlit as st
 from MyEncoder import My_encoder
@@ -53,11 +55,16 @@ submit = st.button("Submit")
 
 if submit:
     # all_feature, one_dump, scaler, model = load_pickle()
-
-    all_feature = joblib.load("all_features.pkl")
-    scaler = joblib.load('data/scaler_dump.pkl')
-    one_dump = joblib.load(base_dir + "/data/ohe_dump.pkl")
-    model = joblib.load(base_dir + "/data/LGR_model.pkl")
+    filename=os.path.join(base_dir,'data','all_features2.pkl')
+    filename = open(filename, 'rb')
+    all_feature = pickle.load(filename)
+    filename = os.path.join(base_dir, 'data', 'scaler_dump2.pkl')
+    filename = open(filename, 'rb')
+    scaler = pickle.load(filename)
+    filename = os.path.join(base_dir, 'data', 'ohe_dump2.pkl')
+    filename = open(filename, 'rb')
+    one_dump = pickle.load(filename)
+    model = joblib.load(base_dir + '/data/LGR_model.pkl')
 
     data = [{'year_quarter': year_quarter, 'brand_prescribed': binary(brand_prescribed), 'total_representative_visits':total_representative_visits,
              'total_sample_dropped': total_sample_dropped,"saving_cards_dropped": np.random.randint(0,140),"vouchers_dropped":np.random.randint(0,116),
