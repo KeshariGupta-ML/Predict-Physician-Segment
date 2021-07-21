@@ -125,7 +125,9 @@ if submit:
     filename = open(filename, 'rb')
     all_feature = pickle.load(filename)
     xq_data=pd.DataFrame(xq_data,columns=all_feature)
-    model = joblib.load(base_dir + '/data/LGR_model.pkl')
+    filename = os.path.join(base_dir, 'data', 'lgb_model.pkl')
+    filename = open(filename, 'rb')
+    model = pickle.load(filename)
 
     #y_pred = rf_model.predict(xq_point_new)
     y_pred = model.predict(xq_data)
