@@ -125,7 +125,7 @@ if submit:
     filename = open(filename, 'rb')
     all_feature = pickle.load(filename)
     xq_data=pd.DataFrame(xq_data,columns=all_feature)
-    filename = os.path.join(base_dir, 'data', 'lgb_model.pkl')
+    filename = 'data/lgb_model.pkl'
     filename = open(filename, 'rb')
     model = pickle.load(filename)
 
