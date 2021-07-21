@@ -55,15 +55,9 @@ submit = st.button("Submit")
 
 if submit:
     # all_feature, one_dump, scaler, model = load_pickle()
-    filename=os.path.join(base_dir,'data','all_features2.pkl')
-    filename = open(filename, 'rb')
-    all_feature = pickle.load(filename)
-    filename = os.path.join(base_dir, 'data', 'scaler_dump2.pkl')
-    filename = open(filename, 'rb')
-    scaler = pickle.load(filename)
-    filename = os.path.join(base_dir, 'data', 'ohe_dump2.pkl')
-    filename = open(filename, 'rb')
-    one_dump = pickle.load(filename)
+
+
+
     model = joblib.load(base_dir + '/data/LGR_model.pkl')
 
     data = [{'year_quarter': year_quarter, 'brand_prescribed': binary(brand_prescribed), 'total_representative_visits':total_representative_visits,
@@ -118,10 +112,19 @@ if submit:
                 'physician_tenure',
                 'physician_age']
     # print("shape======",xq.shape)
+    filename = os.path.join(base_dir, 'data', 'ohe_dump2.pkl')
+    filename = open(filename, 'rb')
+    one_dump = pickle.load(filename)
     xq_cat = one_dump.transform(xq[categorical_columns])
     # scaler.clip = False
+    filename = os.path.join(base_dir, 'data', 'scaler_dump2.pkl')
+    filename = open(filename, 'rb')
+    scaler = pickle.load(filename)
     xq_num=scaler.transform(xq[num_cols])
     xq_data=np.hstack((xq_cat,xq_num))
+    filename = os.path.join(base_dir, 'data', 'all_features2.pkl')
+    filename = open(filename, 'rb')
+    all_feature = pickle.load(filename)
     xq_data=pd.DataFrame(xq_data,columns=all_feature)
 
     #y_pred = rf_model.predict(xq_point_new)
