@@ -54,7 +54,7 @@ submit = st.button("Submit")
 if submit:
     # all_feature, one_dump, scaler, model = load_pickle()
 
-    all_feature = joblib.load("data/all_features.pkl")
+    all_feature = joblib.load("all_features.pkl")
     scaler = joblib.load('data/scaler_dump.pkl')
     one_dump = joblib.load(base_dir + "/data/ohe_dump.pkl")
     model = joblib.load(base_dir + "/data/LGR_model.pkl")
